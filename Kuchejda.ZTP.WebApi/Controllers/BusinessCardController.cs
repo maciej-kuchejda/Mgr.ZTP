@@ -6,20 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kuchejda.ZTP.WebApi.Controllers
 {
     [Route("api/v{version:apiVersion}/business-cards")]
+    [ApiVersion("1.0")]
+    [ApiController]
     public class BusinessCardController : ControllerBase
     {
         private readonly IQueueService _queueService;
         private readonly IIdProvider _idProvider;
         private readonly IBusinessCardValidator _businessCardValidator;
 
-        public BusinessCardController(IBusinessCardValidator businessCardValidator,
-            IIdProvider idProvider,
-            IQueueService queueService)
-        {
-            _queueService = queueService;
-            _idProvider = idProvider;
-            _businessCardValidator = businessCardValidator;
-        }
+        //public BusinessCardController(IBusinessCardValidator businessCardValidator,
+        //    IIdProvider idProvider,
+        //    IQueueService queueService)
+        //{
+        //    _queueService = queueService;
+        //    _idProvider = idProvider;
+        //    _businessCardValidator = businessCardValidator;
+        //}
+
         [Route("bulk")]
         [HttpPost]
         public IActionResult CreateBusinessCard([FromBody]IList<BusinessCardDTO> businessCardDTOs )
