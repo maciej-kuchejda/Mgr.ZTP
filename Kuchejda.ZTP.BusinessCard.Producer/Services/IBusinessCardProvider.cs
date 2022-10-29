@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Kuchejda.ZTP.BusinessCard.Producer.Services
 {
-    internal interface IBusinessCardProvider
+    public interface IBusinessCardProvider
     {
         Task UploadAsync(IEnumerable<Shared.Models.BusinessCardDTO> models);
     }
