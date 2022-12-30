@@ -1,4 +1,9 @@
+using Kuchejda.ZTP.WebApi.Clients;
+using Kuchejda.ZTP.WebApi.Configuration;
+using Kuchejda.ZTP.WebApi.Generatos;
+using Kuchejda.ZTP.WebApi.Providers;
 using Kuchejda.ZTP.WebApi.Services;
+using Kuchejda.ZTP.WebApi.Validators;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -46,7 +51,7 @@ app.UseSwagger();
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Finance V1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BusinessCards V1");
 });
 
 app.UseRouting();
@@ -63,6 +68,16 @@ app.Run();
 void RegisterModules(WebApplicationBuilder builder, ConfigurationManager configuration)
 {
     var services = builder.Services;
+    services.AddOptions();
+    services.Configure<QueueConfiguration>(x => configuration.GetSection("QueueConfiguration").Bind(x));
 
     services.AddScoped<IQueueService, QueueService>();
+    services.AddScoped<IBusinessCardValidator, BusinessCardValidator>();
+    services.AddScoped<IIdProvider, IdProvider>();
+    services.AddScoped<IIdGenerator, IdGenerator>();
+
+    services.AddScoped<IQueueClient, QueueClient>();
+    services.AddScoped<IQueuePropertiesProvider, QueueClient>();
+    services.AddScoped<IJsonProvider, JsonProvider>();
+    services.AddScoped<IServiceBusMessageBatchService, ServiceBusMessageBatchService>();
 }

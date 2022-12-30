@@ -2,6 +2,8 @@
 {
     public class QueueConfiguration
     {
-        public string Host { get; set; }
+        public string ConnectionString { get; set; }
+        public string QueueName { get; set; }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Kuchejda.ZTP.WebApi.Configuration;
+﻿using Kuchejda.ZTP.WebApi.Clients;
+using Kuchejda.ZTP.WebApi.Configuration;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
@@ -6,18 +7,21 @@ namespace Kuchejda.ZTP.WebApi.Services
 {
     public class QueueService : IQueueService
     {
-        private readonly QueueConfiguration _configuration;
-        private readonly RestClient _restClient;
+        private readonly IServiceBusMessageBatchService _batchService;
+        private readonly IQueueClient _queueClient;
 
-        public QueueService(IOptions<QueueConfiguration> configuration)
+        public QueueService(IServiceBusMessageBatchService batchService,
+            IQueueClient queueClient)
         {
-            _configuration = configuration.Value;
-            _restClient = new RestClient(_configuration.Host);
+            _batchService = batchService;
+            _queueClient = queueClient;
         }
 
-        public void Upload(IList<BusinessCard.Shared.Models.BusinessCard> businessCards)
+        public async Task UploadAsync(IList<BusinessCard.Shared.Models.BusinessCard> businessCards)
         {
-            throw new NotImplementedException();
+            var batch = await _batchService.Create(businessCards);
+
+            await _queueClient.UploadAsync(batch);
         }
     }
 }

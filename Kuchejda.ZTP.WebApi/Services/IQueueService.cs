@@ -2,6 +2,6 @@
 {
     public interface IQueueService
     {
-        void Upload(IList<BusinessCard.Shared.Models.BusinessCard> businessCards);
+        Task UploadAsync(IList<BusinessCard.Shared.Models.BusinessCard> businessCards);
     }
 }

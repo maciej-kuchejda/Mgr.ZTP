@@ -4,6 +4,6 @@ namespace Kuchejda.ZTP.WebApi.Validators
 {
     public interface IBusinessCardValidator
     {
-        void Validate(IList<BusinessCardDTO> dTOs);
+        IEnumerable<BusinessCardDTO> Validate(IEnumerable<BusinessCardDTO> dTOs);
     }
 }

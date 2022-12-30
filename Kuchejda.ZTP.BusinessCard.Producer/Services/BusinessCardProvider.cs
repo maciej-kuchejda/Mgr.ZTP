@@ -19,7 +19,7 @@ namespace Kuchejda.ZTP.BusinessCard.Producer.Services
 
         public async Task UploadAsync(IEnumerable<BusinessCardDTO> models)
         {
-            await _businessCardClient.PostAsync(_configuration.Host, models);
+            await _businessCardClient.PostAsync(_configuration.UploadUrl, models);
         }
     }
 }

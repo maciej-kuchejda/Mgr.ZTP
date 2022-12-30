@@ -1,7 +1,9 @@
-﻿namespace Kuchejda.ZTP.WebApi.Clients
+﻿using Azure.Messaging.ServiceBus;
+
+namespace Kuchejda.ZTP.WebApi.Clients
 {
     public interface IQueueClient
     {
-        void Post<TBody>(string path, TBody body) where TBody : class;
+        Task UploadAsync(ServiceBusMessageBatch batchMessages);
     }
 }

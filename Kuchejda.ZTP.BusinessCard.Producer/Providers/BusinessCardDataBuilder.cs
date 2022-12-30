@@ -60,7 +60,7 @@ namespace Kuchejda.ZTP.BusinessCard.Producer.Providers
 
         public IBusinessCardDataBuilder WithRandomWebSite()
         {
-            var website = $"www.{Faker.Internet.DomainName}.{Faker.Internet.DomainSuffix}";
+            var website = $"www.{Faker.Internet.DomainName()}.{Faker.Internet.DomainSuffix}";
             _entity.WebSite = website;
 
             return this;
@@ -68,7 +68,7 @@ namespace Kuchejda.ZTP.BusinessCard.Producer.Providers
 
         public IBusinessCardDataBuilder WithCompany()
         {
-            var company = $"{Faker.Internet.DomainName} - Cebulla Company - CC - departament: {Faker.RandomNumber.Next(_randomDepartments)}";
+            var company = $"{Faker.Internet.DomainName()} - Cebulla Company - CC - departament: {Faker.RandomNumber.Next(_randomDepartments)}";
             _entity.Company = company;
 
             return this;

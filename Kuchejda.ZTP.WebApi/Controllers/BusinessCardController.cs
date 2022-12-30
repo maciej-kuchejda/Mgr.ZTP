@@ -14,26 +14,26 @@ namespace Kuchejda.ZTP.WebApi.Controllers
         private readonly IIdProvider _idProvider;
         private readonly IBusinessCardValidator _businessCardValidator;
 
-        //public BusinessCardController(IBusinessCardValidator businessCardValidator,
-        //    IIdProvider idProvider,
-        //    IQueueService queueService)
-        //{
-        //    _queueService = queueService;
-        //    _idProvider = idProvider;
-        //    _businessCardValidator = businessCardValidator;
-        //}
+        public BusinessCardController(IBusinessCardValidator businessCardValidator,
+            IIdProvider idProvider,
+            IQueueService queueService)
+        {
+            _queueService = queueService;
+            _idProvider = idProvider;
+            _businessCardValidator = businessCardValidator;
+        }
 
         [Route("bulk")]
         [HttpPost]
-        public IActionResult CreateBusinessCard([FromBody]IList<BusinessCardDTO> businessCardDTOs )
+        public async Task<IActionResult> CreateBusinessCard([FromBody]IList<BusinessCardDTO> businessCardDTOs )
         {
-            _businessCardValidator.Validate(businessCardDTOs);
+            var distictend = _businessCardValidator.Validate(businessCardDTOs).ToList();
 
-            var cards = businessCardDTOs.Cast<BusinessCard.Shared.Models.BusinessCard>().ToList();
+            var cards = distictend.Select(x=> new BusinessCard.Shared.Models.BusinessCard(x)).ToList();
 
             _idProvider.SetUniqueIds(cards);
 
-            _queueService.Upload(cards);
+            await _queueService.UploadAsync(cards);
 
             return Accepted();
         }
