@@ -60,7 +60,7 @@ namespace Kuchejda.ZTP.BusinessCard.Producer.Providers
 
         public IBusinessCardDataBuilder WithRandomWebSite()
         {
-            var website = $"www.{Faker.Internet.DomainName()}.{Faker.Internet.DomainSuffix}";
+            var website = $"www.{Faker.Internet.DomainName()}.{Faker.Internet.DomainSuffix()}";
             _entity.WebSite = website;
 
             return this;
